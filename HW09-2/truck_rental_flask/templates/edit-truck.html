@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Slim Jim's Truck Rental</title>
+    </head>
+    <body>
+        <!-- When the instance's ID is non-null, 
+            we must be editing an existing truck -->
+        {% if truck %}
+            <h1>Edit Truck</h1>
+        {% else %}
+            <h1>Add Truck</h1>
+        {% endif %}
+
+        <form action="" method="POST">
+        
+            <input type="hidden" name="id" value="{{truck.id if truck else ''}}" />
+        
+            Model
+            <input type="text" name="model" value="{{truck.model if truck else ''}}" />
+            
+            <br />
+            Mileage
+            <input type="text" name="mileage" value="{{truck.mileage if truck else ''}}" />
+            
+            <br />
+            <input type="submit" value="Save" />
+        </form>
+    </body>
+</html>
+

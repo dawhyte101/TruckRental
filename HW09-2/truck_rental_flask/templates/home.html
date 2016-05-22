@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>Slim Jim's Truck Rental</title>
+        <script type="text/javascript" src="/static/jquery.js"></script>
+        <script type="text/javascript">
+
+            // jQuery is used to make our delete form look 
+            // like a regular link rather than a form button
+            $(document).ready(function() {
+                $(".truck-delete-link").click(function(evt) {
+                    evt.preventDefault();
+                    var relatedForm = $(this).closest("form");
+                    relatedForm.submit();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Slim Jim's Truck Rental</h1>
+
+        <h2>Trucks</h2>
+        <!-- Link the user to the screen/view 
+             they can use to add trucks -->
+        <a href="/edit-truck">Add Truck</a>
+        <!-- Table of all trucks -->
+        <table>
+            <tr>
+                <th>Model</th>
+                <th>Mileage</th>
+                <th></th>
+            </tr>
+            <!-- Render a row for each truck that was passed in -->
+            {% for truck in trucks %}
+                <tr>
+                    <td>{{ truck.model }}</td>
+                    <td>{{ truck.mileage }}</td>
+                    <td>
+                        <a href="/edit-truck?id={{ truck.id }}">Edit</a> 
+                        | 
+                        <!-- All database updates need to be POSTs, so we will use one form for each record-->
+                        <form method="POST" action="/delete-truck?id={{ truck.id }}"
+                            style="display: inline">
+                            <a class="truck-delete-link" href="#">Delete</a> 
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Customers</h2>
+        <!-- Table of all customers -->
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+            </tr>
+            <!-- Render a row for each customer that was passed in -->
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.phone }}</td>
+                    <td>{{ customer.email }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Reservations</h2>
+        <!-- Table of all reservations -->
+        <table>
+            <tr>
+                <th>Customer</th>
+                <th>Truck</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </tr>
+            <!-- Render a row for each reservation that was passed in -->
+            {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.customer.name }}</td>
+                    <td>{{ reservation.truck.model }}</td>
+                    <td>{{ reservation.start_time }}</td>
+                    <td>{{ reservation.end_time }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
+
